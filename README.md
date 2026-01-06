@@ -7,77 +7,106 @@ Real-time Electrostatic Discharge Compliance for Electronics Workstations
 Electrostatic Discharge (ESD) is one of the silent killers in electronics manufacturing.
 Even a small grounding failure can destroy high-value components without visible damage.
 
-Most factories still rely on manual checks or standalone ESD testers, which:
+Smart ESD Wristband Monitoring System
+Real-Time Electrostatic Discharge Compliance for Electronics Workstations
+Overview
 
-Do not provide continuous monitoring
+Electrostatic Discharge (ESD) is a critical reliability risk in electronics manufacturing.
+Even minor grounding failures can cause irreversible damage to sensitive components.
 
-Cannot verify operator presence
+This project presents an automated, real-time ESD wristband monitoring system designed to ensure continuous operator grounding compliance at industrial workstations.
 
-Fail to scale across multiple workstations
+Problem
 
-👉 This project solves that gap.
+Traditional ESD safety methods rely heavily on manual checks and standalone testers.
+These approaches do not guarantee continuous monitoring and are prone to human error.
 
-🧠 What This System Does
+Undetected grounding failures result in:
 
-A smart, automated ESD wristband monitoring system that ensures an operator is:
+Component damage
 
-Present at the workstation
+Quality degradation
 
-Wearing the ESD wristband
+Increased rework and cost
 
-Properly grounded
+Solution
 
-If any safety condition fails, the system instantly alerts via a buzzer.
+A Raspberry Pi–based monitoring system that continuously verifies:
 
-🏗️ System Architecture
-┌────────────┐     ┌────────────┐     ┌────────────┐
-│ IR Sensor  │ ──▶ │ Raspberry  │ ──▶ │   Buzzer   │
-│ (Presence) │     │    Pi      │     │  (Alert)   │
-└────────────┘     │            │     └────────────┘
-                   │            │
-┌────────────┐     │            │
-│ ESD Band   │ ──▶ │ MCP3008    │
-│ (Analog)   │     │  ADC       │
-└────────────┘     └────────────┘
+Operator presence at the workstation
 
-⚙️ Core Features
+Wristband grounding integrity
 
-✔ Real-time operator detection
-✔ Wristband grounding verification using ADC
-✔ Intelligent buzzer logic
-✔ Configurable voltage thresholds
-✔ Lightweight & scalable design
-✔ GitHub Codespaces ready
+System power state
 
-🔌 Hardware Stack
-Component	Purpose
-Raspberry Pi	Main controller
-MCP3008	Analog-to-Digital Converter
-ESD Wristband	Grounding detection
-IR Sensor	Operator presence
-Buzzer	Audible alert
-💻 Software Stack
+Audible alerts are triggered immediately when ESD protection is compromised.
 
-Python 3
+System Concept
 
-RPi.GPIO – GPIO control
+Operator presence is detected using an IR sensor.
+Wristband grounding is measured as an analog voltage through an ADC.
+Decision logic evaluates safety conditions in real time.
+A buzzer alerts the operator when unsafe conditions occur.
 
-spidev – SPI communication
+Core Capabilities
 
-GitHub Codespaces – Cloud development
+Continuous monitoring
+Real-time alerting
+Configurable voltage thresholds
+Lightweight embedded design
+Scalable to multiple workstations
 
-🧪 Decision Logic
-Condition	Buzzer
-No operator detected	OFF
-Operator detected + box OFF	ON
-Operator detected + wristband disconnected	ON
-Operator detected + proper grounding	OFF
-🔋 Voltage Thresholds
-Wristband Connected : < 2.0V
-Box Power OFF Range : 1.3V – 1.8V
+Hardware
 
+Raspberry Pi
+MCP3008 Analog-to-Digital Converter
+ESD Wristband
+IR Proximity Sensor
+Buzzer
 
-Thresholds are configurable for different ESD setups.
+Software
+
+Python
+SPI communication
+GPIO control
+
+Logic Summary
+
+If no operator is detected, the system remains silent.
+If an operator is present without proper grounding, the buzzer is activated.
+If grounding and presence are both valid, the system operates normally.
+
+Voltage Thresholds
+
+Wristband connected below 2.0 volts
+Power-off condition between 1.3 and 1.8 volts
+
+Thresholds are adjustable to match different workstation requirements.
+
+Project Structure
+
+Source code is separated from configuration files.
+Development environment is containerized using GitHub Codespaces.
+The repository is organized for clarity, review, and scalability.
+
+Execution
+
+The application runs continuously and evaluates safety conditions in a loop.
+Hardware execution is intended for Raspberry Pi platforms.
+
+Applications
+
+Electronics manufacturing
+SMT assembly lines
+Quality assurance labs
+ESD-controlled environments
+
+Future Scope
+
+Centralized monitoring dashboards
+Factory system integration
+Operator-level compliance analytics
+Wearable embedded implementations
 
 📁 Project Structure
 ESD-Wristband-Monitoring/
