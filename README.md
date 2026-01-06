@@ -1,114 +1,121 @@
-*Smart ESD Wrist Band Monitoring System*
-Overview
+<div align="center">
+⚡ Smart ESD Wristband Monitoring System
+Real-time Electrostatic Discharge Compliance for Electronics Workstations
+<img src="https://img.shields.io/badge/Platform-Raspberry%20Pi-red"> <img src="https://img.shields.io/badge/Language-Python-blue"> <img src="https://img.shields.io/badge/Domain-Embedded%20Systems-green"> <img src="https://img.shields.io/badge/Use%20Case-Industrial%20ESD%20Safety-orange"> </div>
+🚀 Why This Project Exists
 
-Electrostatic Discharge (ESD) poses a serious risk to sensitive electronic components in manufacturing and testing environments. Manual verification of ESD wrist band usage is error-prone and not scalable.
-This project implements an automated ESD wrist band monitoring system using a Raspberry Pi to ensure operator grounding compliance in real time.
+Electrostatic Discharge (ESD) is one of the silent killers in electronics manufacturing.
+Even a small grounding failure can destroy high-value components without visible damage.
 
-Problem Statement
+Most factories still rely on manual checks or standalone ESD testers, which:
 
-In electronics production lines:
+Do not provide continuous monitoring
 
-Operators may work without wearing an ESD wrist band
+Cannot verify operator presence
 
-Grounding connections can become loose or disconnected
+Fail to scale across multiple workstations
 
-Manual supervision cannot guarantee continuous compliance
+👉 This project solves that gap.
 
-These issues can lead to component damage, quality failures, and financial loss.
+🧠 What This System Does
 
-Proposed Solution
+A smart, automated ESD wristband monitoring system that ensures an operator is:
 
-A Raspberry Pi–based system that:
+Present at the workstation
 
-Detects operator presence using an IR sensor
+Wearing the ESD wristband
 
-Monitors ESD wrist band grounding via MCP3008 ADC
+Properly grounded
 
-Triggers an audible alert when ESD protection is not ensured
+If any safety condition fails, the system instantly alerts via a buzzer.
 
-Provides real-time monitoring at the workstation level
+🏗️ System Architecture
+┌────────────┐     ┌────────────┐     ┌────────────┐
+│ IR Sensor  │ ──▶ │ Raspberry  │ ──▶ │   Buzzer   │
+│ (Presence) │     │    Pi      │     │  (Alert)   │
+└────────────┘     │            │     └────────────┘
+                   │            │
+┌────────────┐     │            │
+│ ESD Band   │ ──▶ │ MCP3008    │
+│ (Analog)   │     │  ADC       │
+└────────────┘     └────────────┘
 
-System Architecture
+⚙️ Core Features
 
-Signal Flow:
+✔ Real-time operator detection
+✔ Wristband grounding verification using ADC
+✔ Intelligent buzzer logic
+✔ Configurable voltage thresholds
+✔ Lightweight & scalable design
+✔ GitHub Codespaces ready
 
-IR sensor detects operator presence at the workstation
-
-MCP3008 reads analog voltage from the ESD wrist band
-
-Raspberry Pi evaluates grounding status using voltage thresholds
-
-Buzzer alerts when unsafe conditions are detected
-
-Hardware Components
-
-Raspberry Pi
-
-MCP3008 (10-bit ADC)
-
-ESD Wrist Band
-
-IR Proximity Sensor
-
-Buzzer
-
-Power Supply & Wiring
-
-Software Stack
+🔌 Hardware Stack
+Component	Purpose
+Raspberry Pi	Main controller
+MCP3008	Analog-to-Digital Converter
+ESD Wristband	Grounding detection
+IR Sensor	Operator presence
+Buzzer	Audible alert
+💻 Software Stack
 
 Python 3
 
-RPi.GPIO for GPIO control
+RPi.GPIO – GPIO control
 
-spidev for SPI communication with MCP3008
+spidev – SPI communication
 
-Working Logic
-Condition	System Action
-No operator detected	Buzzer OFF
-Operator detected + box power OFF	Buzzer ON
-Operator detected + wrist band disconnected	Buzzer ON
-Operator detected + wrist band properly grounded	Buzzer OFF
-Voltage Thresholds Used
+GitHub Codespaces – Cloud development
 
-Wrist band connected: Voltage < 2.0 V
+🧪 Decision Logic
+Condition	Buzzer
+No operator detected	OFF
+Operator detected + box OFF	ON
+Operator detected + wristband disconnected	ON
+Operator detected + proper grounding	OFF
+🔋 Voltage Thresholds
+Wristband Connected : < 2.0V
+Box Power OFF Range : 1.3V – 1.8V
 
-Box power OFF range: 1.3 V – 1.8 V
 
-These thresholds can be calibrated based on workstation requirements.
-Project Structure
+Thresholds are configurable for different ESD setups.
+
+📁 Project Structure
 ESD-Wristband-Monitoring/
 │
 ├── src/
 │   └── esd_monitor.py
-│
 ├── .devcontainer/
 │   ├── devcontainer.json
 │   └── Dockerfile
-│
 ├── requirements.txt
 ├── README.md
 └── .gitignore
 
-Running the Project
+▶️ How to Run
 python src/esd_monitor.py
-Applications
 
-Electronics manufacturing units
 
-ESD-protected workstations
+⚠️ Hardware execution requires a Raspberry Pi.
+Codespaces is provided for development & review.
 
-Quality assurance and compliance monitoring
+🏭 Industrial Use Cases
 
-Industrial safety automation
+Electronics manufacturing lines
 
-Future Enhancements
+SMT workstations
 
-Web dashboard for multi-workstation monitoring
+Quality assurance labs
 
-MQTT / HTTP integration for factory systems
+ESD-controlled environments
 
-Employee-level compliance logging
+🔮 Future Roadmap
 
-BLE-based anti-theft detection
+🌐 Web dashboard for multiple stations
 
-ESP32-based wearable version
+📡 MQTT / HTTP factory integration
+
+📊 Operator-level compliance logs
+
+🔵 BLE-based anti-theft detection
+
+⚡ ESP32 wearable version
